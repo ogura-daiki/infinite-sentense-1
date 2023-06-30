@@ -1,15 +1,4 @@
-
-
-
-
-const buildKuromoji = () => new Promise(r => {
-  kuromoji.builder({ dicPath: "https://cdn.jsdelivr.net/npm/kuromoji@0.1.2/dict/" }).build(function (err, tokenizer) {
-    r(tokenizer);
-  })
-});
-const kuromojiTokenizer = await buildKuromoji();
-
-const moveCharCode = (char, move) => String.fromCharCode(char.charCodeAt() + move);
+import { kuromojiTokenizer } from "./kurimoji.js";
 
 /**
  * 
@@ -512,5 +501,6 @@ const convert = text => {
   }
   return resultText;
 }
+
 
 export { convert };
