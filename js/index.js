@@ -62,5 +62,8 @@ append(create("button", {
     translated = translated.replaceAll(/[a-zA-Z\s]+(氏|さん|様|殿|君)?/g, a=>randomGet()+nameSuffixList[Math.floor(Math.random()*nameSuffixList.length)]);
     translated = convert(translated);
     output.textContent = translated;
+    //音声読み上げ
+    speechSynthesis.cancel();
+    speechSynthesis.speak(new SpeechSynthesisUtterance(translated));
   },
 }))
