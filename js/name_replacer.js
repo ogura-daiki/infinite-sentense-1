@@ -49,7 +49,7 @@ const replaceName = (input) => {
         resultText+=getCountryName(tokens.word_id);
       }
       else {
-        resultText+="イナカ村";
+        resultText+=getAreaName(tokens.word_id);
       }
       continue;
     }

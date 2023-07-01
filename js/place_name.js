@@ -34,7 +34,7 @@ const getRandomPart = (length) => {
   return result.join("");
 }
 
-const join = (str, vals) => str.reduce((c, v, i) => c + vals[i-1] + v);
+const join = (str, vals) => str.reduce((c, v, i) => c + vals[i - 1] + v);
 const p = (str, ...vals) => {
   return () => join(str, vals.map((input) => {
     if (typeof input[Symbol.iterator] !== "function") {
@@ -72,14 +72,14 @@ const govNameSuffix = () => {
   return randArr(["", "議会", "評議会", "神殿", "王朝", "朝", "府", "政府", "政権"]);
 }
 
-const suffixPatterns = [
+const countrySuffixPatterns = [
   [0.6, countryNameSuffix],
   [0.25, groupStateSuffix],
   [0.15, govNameSuffix],
 ];
-const getSuffix = () => {
+const getCountrySuffix = () => {
   let patternRand = Math.random();
-  for (const [num, pattern] of suffixPatterns) {
+  for (const [num, pattern] of countrySuffixPatterns) {
     if (patternRand < num) return pattern();
     patternRand -= num;
   }
@@ -93,7 +93,7 @@ const countryPatterns = [
 const getCountryPattern = () => {
   let patternRand = Math.random();
   for (const [num, pattern] of countryPatterns) {
-    if (patternRand < num){
+    if (patternRand < num) {
       return pattern();
     }
     patternRand -= num;
@@ -105,10 +105,25 @@ const getCountryName = key => {
   if (countryCache.has(key)) {
     return countryCache.get(key);
   }
-  console.log(getCountryPattern());
-  const result = getCountryPattern() + getSuffix();
+  const result = getCountryPattern() + getCountrySuffix();
   countryCache.set(key, result);
   return result;
 }
 
-export { getCountryName };
+const getAreaSuffix = () => randArr(["領", "市", "町", "村", "州", "区", "神殿", "寺院", "森", "鉱山", "山", "川", "橋", "盆地", "火山", "隔離区域", "保護地域", "区域", "地区", "地域", "地方",]);
+
+const areaCache = new Map();
+const getAreaName = key => {
+  if (areaCache.has(key)) {
+    return areaCache.get(key);
+  }
+  let suffix = "";
+  if(Math.random() < 0.7){
+    suffix = getAreaSuffix();
+  }
+  const result = getRandomPart(randomLength(3,8)) + suffix;
+  areaCache.set(key, result);
+  return result;
+}
+
+export { getCountryName, getAreaName };
