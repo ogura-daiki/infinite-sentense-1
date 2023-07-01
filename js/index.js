@@ -66,9 +66,9 @@ append(create("button", {
     translated = translated.replace(/\s+/g, "");
     translated = translated.replace(/[０-９]/g, zenkakuNum2Hankaku);
     translated = translated.replace(/[」』]/g,a=>"。"+a);
+    translated = translated.replace(/(です|ます|でした|ました|でしょう|ありません|ください)、/, (_,g1)=>g1+"。");
+    translated = translated.replace(/(です|ます|でした|ました|でしょう|ありません|ください)([「『])/, (_,g1,g2)=>g1+"。"+g2);
     translated = translated.replace(/[,，、\.．。?!]+/, (_)=>({",":"、","，":"、","、":"、",".":"。","．":"。","。":"。","?":"？","!":"！"}[_[0]]??"。"));
-    translated = translated.replace(/(です|ます)、/, (_,g1)=>g1+"。");
-    //translated = translated.replaceAll(/[a-zA-Z\s]*[a-zA-Z]+(氏|さん|様|殿|君)?/g, a=>randomGet()+nameSuffixList[Math.floor(Math.random()*nameSuffixList.length)]);
     translated = convert(translated);
     translated = replaceName(translated);
     output.textContent = translated;

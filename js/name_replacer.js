@@ -1,6 +1,7 @@
 
 import { randomGet } from "./jp_name.js";
 import { kuromojiTokenizer } from "./kurimoji.js";
+import { getCountryName } from "./place_name.js";
 
 const isHumanName = token => {
   if(token.pos !== "名詞" || token.pos_detail_1 === "数"){
@@ -45,7 +46,7 @@ const replaceName = (input) => {
     //--------------------------
     if(isPlaceName(tokens[i])){
       if(tokens[i].pos_detail_3 === "国"){
-        resultText+="ナントカ国";
+        resultText+=getCountryName();
       }
       else {
         resultText+="イナカ村";
