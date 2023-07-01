@@ -65,12 +65,12 @@ append(create("button", {
     const nameSuffixList = [""+"氏","さん","様","殿","君"];
     translated = translated.replace(/\s+/g, "");
     translated = translated.replace(/[０-９]/g, zenkakuNum2Hankaku);
-    translated = translated.replace(/[」』]/g,a=>"。"+a);
-    translated = translated.replace(/(です|ます|でした|ました|でしょう|ありません|ください)、/, (_,g1)=>g1+"。");
-    translated = translated.replace(/(です|ます|でした|ました|でしょう|ありません|ください)([「『])/, (_,g1,g2)=>g1+"。"+g2);
-    translated = translated.replace(/[,，、\.．。?!]+/, (_)=>({",":"、","，":"、","、":"、",".":"。","．":"。","。":"。","?":"？","!":"！"}[_[0]]??"。"));
-    translated = convert(translated);
+    translated = translated.replace(/[,，、\.．。?!]+/g, (_)=>({",":"、","，":"、","、":"、",".":"。","．":"。","。":"。","?":"？","!":"！"}[_[0]]??"。"));
     translated = replaceName(translated);
+    translated = convert(translated);
+    translated = translated.replace(/[」』]/g,a=>"。"+a);
+    translated = translated.replace(/(です|ます|でした|ました|でしょう|ありません|ください)、/g, (_,g1)=>g1+"。");
+    translated = translated.replace(/(です|ます|でした|ました|でしょう|ありません|ください)([「『])/g, (_,g1,g2)=>g1+"。"+g2);
     output.textContent = translated;
 
     //音声読み上げ
