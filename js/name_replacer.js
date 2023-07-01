@@ -3,6 +3,7 @@ import { getRandomKana, getRandomKanaPart } from "./get_random_kana.js";
 import { randomGet } from "./jp_name.js";
 import { kuromojiTokenizer } from "./kurimoji.js";
 import { getAreaName, getCountryName } from "./place_name.js";
+import { randomLength } from "./util.js";
 
 const isHumanName = token => {
   if(token.pos !== "名詞" || token.pos_detail_1 === "数"){
@@ -23,6 +24,23 @@ const isHumanName = token => {
 
 const isPlaceName = t => t.pos === "名詞" && t.pos_detail_2 === "地域" && t.pos_detail_1 === "固有名詞";
 
+
+const humanNameCache = new Map();
+const getRandomHumanName = (key) => {
+  if(key.includes("・")){
+    return key.split("・").map(v=>getRandomHumanName(v)).join("・");
+  }
+  if(humanNameCache.has(key)){
+    return humanNameCache.get(key);
+  }
+
+  let result;
+  if(Math.random()<0.3) result = randomGet();
+  else result = getRandomKanaPart(randomLength(Math.round((2*1.5+key.length*0.5)/2), Math.round((7*1.5+key.length*0.5)/2)));
+  humanNameCache.set(key, result);
+  return result;
+}
+
 const replaceName = (input) => {
   const tokens = kuromojiTokenizer.tokenize(input);
   let resultText = "";
@@ -39,18 +57,7 @@ const replaceName = (input) => {
     notHumanName.push(tokens[i]);
     if(humanName.length){
       const joined = humanName.reduce((c,v)=>c+v.surface_form,"");
-      const chain = joined.split("・");
-
-      if(chain.length === 1){
-        resultText += randomGet();
-      }
-      else{
-        const getNamePart = (v)=>{
-          if(Math.random()<0.3) return randomGet();
-          return getRandomKanaPart(v.length);
-        }
-        resultText += chain.map(getNamePart).join("・");
-      }
+      resultText += getRandomHumanName(joined);
       i-=1;
       continue;
     }
