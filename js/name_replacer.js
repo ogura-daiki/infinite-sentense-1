@@ -1,7 +1,7 @@
 
 import { randomGet } from "./jp_name.js";
 import { kuromojiTokenizer } from "./kurimoji.js";
-import { getCountryName } from "./place_name.js";
+import { getAreaName, getCountryName } from "./place_name.js";
 
 const isHumanName = token => {
   if(token.pos !== "名詞" || token.pos_detail_1 === "数"){
