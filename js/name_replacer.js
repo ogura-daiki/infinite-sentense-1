@@ -46,7 +46,7 @@ const replaceName = (input) => {
     //--------------------------
     if(isPlaceName(tokens[i])){
       if(tokens[i].pos_detail_3 === "国"){
-        resultText+=getCountryName();
+        resultText+=getCountryName(tokens.word_id);
       }
       else {
         resultText+="イナカ村";
