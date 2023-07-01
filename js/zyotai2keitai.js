@@ -264,7 +264,7 @@ const katuyou = {
 /**
  * 文章の終わり
  */
-const endSentence = o => !o || (o.pos === "記号" && o.pos_detail_1 === "句点");
+const endSentence = o => !o || (o.pos === "記号" && (o.pos_detail_1 === "句点" || o.pos_detail_1 === "読点"));
 
 const zyoutaiPatterns = [
   {
@@ -501,6 +501,5 @@ const convert = text => {
   }
   return resultText;
 }
-
 
 export { convert };
