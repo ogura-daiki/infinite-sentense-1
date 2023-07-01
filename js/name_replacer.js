@@ -46,10 +46,10 @@ const replaceName = (input) => {
     //--------------------------
     if(isPlaceName(tokens[i])){
       if(tokens[i].pos_detail_3 === "国"){
-        resultText+=getCountryName(tokens.surface_form);
+        resultText+=getCountryName(tokens[i].surface_form);
       }
       else {
-        resultText+=getAreaName(tokens.surface_form);
+        resultText+=getAreaName(tokens[i].surface_form);
       }
       continue;
     }
