@@ -1,32 +1,39 @@
 const arrayRandomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-const withY = c => [..."ャィュェョ"].map(v=>c+v);
-const withH = c => ["ャ","","ュ","ェ","ョ"].map(v=>c+v);
+const withY = c => [..."ャィュェョ"].map(v => c + v);
+const withH = c => ["ャ", "", "ュ", "ェ", "ョ"].map(v => c + v);
 
 const syllableMap = {
-  "":[..."アイウエオ"],
-  "k":[..."カキクケコ"],"ky":withY("キ"),"q":["クァ","クィ","ク","クェ","クォ"],
-  "g":[..."ガギグゲゴ"],"gy":withY("ギ"),
-  "s":[..."サシスセソ"],"sy":withY("シ"),"sh":withH("シ"),
-  "z":[..."ザジズゼゾ"],"zy":withY("ジ"),"j":withH("ジ"),
-  "t":[..."タチツテト"],
-  "ty":withY("チ"),"ch":withH("チ"),
-  "ts":["ツァ","ツィ","ツ","ツェ","ツォ"],
-  "th":withY("テ"),
-  "tw":["トァ","トィ","トゥ","トェ","トォ"],
-  "d":[..."ダヂヅデド"],"dy":withY("ヂ"),"dh":withY("デ"),
-  "n":[..."ナニヌネノ"],"ny":withY("ニ"),
-  "h":[..."ハヒフヘホ"],"hy":withY("ヒ"),
-  "f":["ファ","フィ","フ","フェ","フォ"],"fy":withY("フ"),
-  "b":[..."バビブベボ"],"by":withY("ビ"),
-  "v":["ヴァ","ヴィ","ヴ","ヴェ","ヴォ"],"vy":withY("ヴ"),
-  "p":[..."パピプペポ"],"py":withY("ピ"),
-  "m":[..."マミムメモ"],"my":withY("ミ"),
-  "y":["ヤ","イ","ユ","イェ","ヨ"],
-  "r":[..."ラリルレロ"],
-  "w":["ワ","ウィ","ウ","ウェ","ヲ"],
-  "l":[..."ァィゥェォ"],
+  "": [20, [..."アイウエオ"]],
+  "k": [20, [..."カキクケコ"]], "ky": [2, withY("キ")], "q": [2, ["クァ", "クィ", "ク", "クェ", "クォ"]],
+  "g": [8, [..."ガギグゲゴ"]], "gy": [1, withY("ギ")],
+  "s": [20, [..."サシスセソ"]], "sy": [2, withY("シ")], "sh": [2, withH("シ")],
+  "z": [8, [..."ザジズゼゾ"]], "zy": [1, withY("ジ")], "j": [1, withH("ジ")],
+  "t": [20, [..."タチツテト"]],
+  "ty": [2, withY("チ")], "ch": [2, withH("チ")],
+  "ts": [2, ["ツァ", "ツィ", "ツ", "ツェ", "ツォ"]],
+  "th": [2, withY("テ")],
+  "tw": [1, ["トァ", "トィ", "トゥ", "トェ", "トォ"]],
+  "d": [8, [..."ダヂヅデド"]], "dy": [1, withY("ヂ")], "dh": [1, withY("デ")],
+  "n": [20, [..."ナニヌネノ"]], "ny": [2, withY("ニ")],
+  "h": [20, [..."ハヒフヘホ"]], "hy": [2, withY("ヒ")],
+  "f": [2, ["ファ", "フィ", "フ", "フェ", "フォ"]], "fy": [2, withY("フ")],
+  "b": [8, [..."バビブベボ"]], "by": [1, withY("ビ")],
+  "v": [1, ["ヴァ", "ヴィ", "ヴ", "ヴェ", "ヴォ"]], "vy": [1, withY("ヴ")],
+  "p": [8, [..."パピプペポ"]], "py": [1, withY("ピ")],
+  "m": [20, [..."マミムメモ"]], "my": [2, withY("ミ")],
+  "y": [2, ["ヤ", "イ", "ユ", "イェ", "ヨ"]],
+  "r": [20, [..."ラリルレロ"]],
+  "w": [2, ["ワ", "ウィ", "ウ", "ウェ", "ヲ"]],
+  "l": [2, [..."ァィゥェォ"]],
 };
-const getRandomKana = ()=>arrayRandomPick(arrayRandomPick(Object.values(syllableMap)));
+const total = Object.values(syllableMap).reduce((c,[num])=>c+num,0);
+const getRandomKana = () => {
+  let rand = Math.floor(Math.random()*total);
+  for(const [num, list] of Object.values(syllableMap)){
+    if(rand < num) return arrayRandomPick(list);
+    rand -= num;
+  }
+}
 
-export {getRandomKana};
+export { getRandomKana };
