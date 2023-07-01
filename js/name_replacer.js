@@ -9,7 +9,7 @@ const isHumanName = token => {
     return false;
   }
   if(token.surface_form.length === 0) return true;
-  if(token.pos_detail_2 === "人名") return true;
+  if(token.pos_detail_2 === "人名" && token.pos_detail_1 !== "接尾") return true;
   if(token.word_type==="UNKNOWN"){
     if(/^[a-zA-Z]+$/.test(token.surface_form)){
       return true;
@@ -45,7 +45,11 @@ const replaceName = (input) => {
         resultText += randomGet();
       }
       else{
-        resultText += chain.map((v)=>getRandomKanaPart(v.length)).join("・");
+        const getNamePart = (v)=>{
+          if(Math.random()<0.3) return randomGet();
+          return getRandomKanaPart(v.length);
+        }
+        resultText += chain.map(getNamePart).join("・");
       }
       i-=1;
       continue;
