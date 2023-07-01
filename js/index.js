@@ -77,17 +77,18 @@ append(create("button", {
     let translated = await translate(randomString);
     console.log(translated);
     translated = translated.replaceAll(/\s{2,}/g, " ");
-    translated = translated.replace(/\s+/g, "");
     translated = translated.replace(/[０-９]/g, zenkakuNum2Hankaku);
+    translated = translated.replace(/\s*(\d+)\s*/g, (_,g1)=>g1);
     translated = normalizeSign(translated);
     translated = replaceName(translated);
     translated = convert(translated);
     translated = translated.replace(/[」』]/g, a => "。" + a);
     translated = translated.replace(new RegExp(`(${keitaiList.join("|")})、`,"g"), (_, g1) => g1 + "。");
     translated = translated.replace(new RegExp(`(${keitaiList.join("|")})([「『])`,"g"), (_, g1, g2) => g1 + "。" + g2);
-
+    
+    translated = translated.replace(/\s+/g, "。");
     translated = normalizeSign(translated);
-
+    
     output.textContent = translated;
 
     //音声読み上げ
