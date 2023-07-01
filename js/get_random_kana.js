@@ -25,7 +25,6 @@ const syllableMap = {
   "y": [2, ["ヤ", "イ", "ユ", "イェ", "ヨ"]],
   "r": [20, [..."ラリルレロ"]],
   "w": [2, ["ワ", "ウィ", "ウ", "ウェ", "ヲ"]],
-  "l": [2, [..."ァィゥェォ"]],
 };
 const total = Object.values(syllableMap).reduce((c,[num])=>c+num,0);
 const getRandomKana = () => {
