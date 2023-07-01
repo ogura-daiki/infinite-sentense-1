@@ -36,4 +36,27 @@ const getRandomKana = () => {
   }
 }
 
-export { getRandomKana };
+
+const getRandomKanaPart = (length) => {
+  const result = [getRandomKana()];
+  for (let i = 1; i < length; i++) {
+    const specialRand = Math.random();
+    const before = result[i - 1];
+    if (specialRand < 0.05 && before !== "ッ") {
+      result.push("ッ");
+    }
+    else if (specialRand < 0.1 && !["ンー"].includes(before)) {
+      result.push("ー");
+    }
+    else if (specialRand < 0.15 && !["ッンー"].includes(before)) {
+      result.push("ン");
+    }
+    else {
+      result.push(getRandomKana());
+    }
+  }
+  return result.join("");
+}
+
+
+export { getRandomKana, getRandomKanaPart };

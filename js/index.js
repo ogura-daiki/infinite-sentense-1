@@ -78,7 +78,7 @@ append(create("button", {
     console.log(translated);
     translated = translated.replaceAll(/\s{2,}/g, " ");
     translated = translated.replace(/[０-９]/g, zenkakuNum2Hankaku);
-    translated = translated.replace(/\s*(\d+)\s*/g, (_,g1)=>g1);
+    translated = translated.replace(/\s*([\da-zA-Z]+)\s*/g, (_,g1)=>g1);
     translated = normalizeSign(translated);
     translated = replaceName(translated);
     translated = convert(translated);
@@ -96,3 +96,6 @@ append(create("button", {
     speechSynthesis.speak(new SpeechSynthesisUtterance(translated));
   },
 }));
+
+
+console.log(kuromojiTokenizer.tokenize(`日本人と中国共産党。`));

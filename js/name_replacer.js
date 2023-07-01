@@ -1,4 +1,5 @@
 
+import { getRandomKana, getRandomKanaPart } from "./get_random_kana.js";
 import { randomGet } from "./jp_name.js";
 import { kuromojiTokenizer } from "./kurimoji.js";
 import { getAreaName, getCountryName } from "./place_name.js";
@@ -20,7 +21,7 @@ const isHumanName = token => {
   return false;
 }
 
-const isPlaceName = t => t.pos === "名詞" && t.pos_detail_2 === "地域";
+const isPlaceName = t => t.pos === "名詞" && t.pos_detail_2 === "地域" && t.pos_detail_1 === "固有名詞";
 
 const replaceName = (input) => {
   const tokens = kuromojiTokenizer.tokenize(input);
@@ -37,7 +38,15 @@ const replaceName = (input) => {
     }
     notHumanName.push(tokens[i]);
     if(humanName.length){
-      resultText += randomGet();
+      const joined = humanName.reduce((c,v)=>c+v.surface_form,"");
+      const chain = joined.split("・");
+
+      if(chain.length === 1){
+        resultText += randomGet();
+      }
+      else{
+        resultText += chain.map((v)=>getRandomKanaPart(v.length)).join("・");
+      }
       i-=1;
       continue;
     }

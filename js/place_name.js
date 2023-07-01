@@ -1,38 +1,9 @@
-import { getRandomKana } from "./get_random_kana.js";
-
-const randArr = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
-const randomLength = (min, max) => {
-  const baseRand = Math.random();
-  let value = Math.sin(Math.random() * Math.PI) / 2;
-  if (baseRand > 0.5) {
-    value = 1 - value;
-  }
-  return Math.floor((max - min - 1) * value) + min;
-}
+import { getRandomKana, getRandomKanaPart } from "./get_random_kana.js";
+import { randArr, randomLength } from "./util.js";
 
 
-const getRandomPart = (length) => {
-  const result = [getRandomKana()];
-  for (let i = 1; i < length; i++) {
-    const specialRand = Math.random();
-    const before = result[i - 1];
-    if (specialRand < 0.05 && before !== "ッ") {
-      result.push("ッ");
-    }
-    else if (specialRand < 0.1 && !["ンー"].includes(before)) {
-      result.push("ー");
-    }
-    else if (specialRand < 0.15 && !["ッンー"].includes(before)) {
-      result.push("ン");
-    }
-    else {
-      result.push(getRandomKana());
-    }
-  }
-  console.log(length, result);
-  return result.join("");
-}
+
+
 
 const join = (str, vals) => str.reduce((c, v, i) => c + vals[i - 1] + v);
 const p = (str, ...vals) => {
@@ -42,7 +13,7 @@ const p = (str, ...vals) => {
     }
     input = [...input];
     if (input.length === 2 && input.every(v => typeof v === "number")) {
-      const result = getRandomPart(randomLength(...input));
+      const result = getRandomKanaPart(randomLength(...input));
       console.log(input, result);
       return result;
     }
@@ -121,7 +92,7 @@ const getAreaName = key => {
   if(Math.random() < 0.7){
     suffix = getAreaSuffix();
   }
-  const result = getRandomPart(randomLength(3,8)) + suffix;
+  const result = getRandomKanaPart(randomLength(3,8)) + suffix;
   areaCache.set(key, result);
   return result;
 }
