@@ -1,8 +1,12 @@
 import { randomChar } from "./chinese_char.js";
 import { create } from "./create.js";
 import { translate } from "./translate.js";
-import { randomGet } from "./jp_name.js";
 import { convert } from "./zyotai2keitai.js";
+import { kuromojiTokenizer } from "./kurimoji.js";
+import { replaceName } from "./name_replacer.js";
+
+
+speechSynthesis.cancel();
 
 
 const genRandomString = (length) => {
@@ -43,6 +47,9 @@ const output = create("p", {
         padding:8px 16px;
     `,
 });
+
+const zenkakuNumOffset = "０".charCodeAt() - "0".charCodeAt();
+const zenkakuNum2Hankaku = c=>String.fromCharCode(c.charCodeAt()-zenkakuNumOffset);
 append(output);
 append(create("button", {
   style: `
@@ -56,14 +63,18 @@ append(create("button", {
     console.log(translated);
     translated = translated.replaceAll(/\s{2,}/g, " ");
     const nameSuffixList = [""+"氏","さん","様","殿","君"];
-    translated = translated.replace(/\s+/, "");
-    translated = translated.replace(/[,，.．?!]/, (_,g1)=>({",":"、","，":"、",".":"。","．":"。","?":"？","!":"！"}[g1]));
+    translated = translated.replace(/\s+/g, "");
+    translated = translated.replace(/[０-９]/g, zenkakuNum2Hankaku);
+    translated = translated.replace(/[」』]/g,a=>"。"+a);
+    translated = translated.replace(/[,，、\.．。?!]+/, (_)=>({",":"、","，":"、","、":"、",".":"。","．":"。","。":"。","?":"？","!":"！"}[_[0]]??"。"));
     translated = translated.replace(/(です|ます)、/, (_,g1)=>g1+"。");
-    translated = translated.replaceAll(/[a-zA-Z\s]+(氏|さん|様|殿|君)?/g, a=>randomGet()+nameSuffixList[Math.floor(Math.random()*nameSuffixList.length)]);
+    //translated = translated.replaceAll(/[a-zA-Z\s]*[a-zA-Z]+(氏|さん|様|殿|君)?/g, a=>randomGet()+nameSuffixList[Math.floor(Math.random()*nameSuffixList.length)]);
     translated = convert(translated);
+    translated = replaceName(translated);
     output.textContent = translated;
+
     //音声読み上げ
     speechSynthesis.cancel();
     speechSynthesis.speak(new SpeechSynthesisUtterance(translated));
   },
-}))
+}));
