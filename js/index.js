@@ -40,6 +40,21 @@ const genRandomString = (length) => {
 
 const append = (...e) => document.body.append(...e);
 
+const normalizeSign = (input) => input.replace(/[,，、\.．。\?？!！]+/g, (_) => ({
+  ",": "、",
+  "，": "、",
+  "、": "、",
+  ".": "。",
+  "．": "。",
+  "。": "。",
+  "?": "？",
+  "？": "？",
+  "!": "！",
+  "！": "！",
+}[_[0]] ?? "。"));
+
+const keitaiList = ["です","ます","でした","ました","でしょう","ありません","ください"];
+
 const output = create("p", {
   id: "output",
   style: `
@@ -49,7 +64,7 @@ const output = create("p", {
 });
 
 const zenkakuNumOffset = "０".charCodeAt() - "0".charCodeAt();
-const zenkakuNum2Hankaku = c=>String.fromCharCode(c.charCodeAt()-zenkakuNumOffset);
+const zenkakuNum2Hankaku = c => String.fromCharCode(c.charCodeAt() - zenkakuNumOffset);
 append(output);
 append(create("button", {
   style: `
@@ -62,15 +77,17 @@ append(create("button", {
     let translated = await translate(randomString);
     console.log(translated);
     translated = translated.replaceAll(/\s{2,}/g, " ");
-    const nameSuffixList = [""+"氏","さん","様","殿","君"];
     translated = translated.replace(/\s+/g, "");
     translated = translated.replace(/[０-９]/g, zenkakuNum2Hankaku);
-    translated = translated.replace(/[,，、\.．。?!]+/g, (_)=>({",":"、","，":"、","、":"、",".":"。","．":"。","。":"。","?":"？","!":"！"}[_[0]]??"。"));
+    translated = normalizeSign(translated);
     translated = replaceName(translated);
     translated = convert(translated);
-    translated = translated.replace(/[」』]/g,a=>"。"+a);
-    translated = translated.replace(/(です|ます|でした|ました|でしょう|ありません|ください)、/g, (_,g1)=>g1+"。");
-    translated = translated.replace(/(です|ます|でした|ました|でしょう|ありません|ください)([「『])/g, (_,g1,g2)=>g1+"。"+g2);
+    translated = translated.replace(/[」』]/g, a => "。" + a);
+    translated = translated.replace(new RegExp(`(${keitaiList.join("|")})、`,"g"), (_, g1) => g1 + "。");
+    translated = translated.replace(new RegExp(`(${keitaiList.join("|")})([「『])`,"g"), (_, g1, g2) => g1 + "。" + g2);
+
+    translated = normalizeSign(translated);
+
     output.textContent = translated;
 
     //音声読み上げ
