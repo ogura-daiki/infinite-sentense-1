@@ -96,6 +96,3 @@ append(create("button", {
     speechSynthesis.speak(new SpeechSynthesisUtterance(translated));
   },
 }));
-
-
-console.log(kuromojiTokenizer.tokenize(`日本人と中国共産党。`));

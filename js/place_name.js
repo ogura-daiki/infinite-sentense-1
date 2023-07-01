@@ -14,7 +14,6 @@ const p = (str, ...vals) => {
     input = [...input];
     if (input.length === 2 && input.every(v => typeof v === "number")) {
       const result = getRandomKanaPart(randomLength(...input));
-      console.log(input, result);
       return result;
     }
     return input[Math.floor(Math.random() * input.length)];

@@ -5020,7 +5020,6 @@ const randomGet = () => {
   let nameRand = Math.floor(Math.random() * total);
   for (const [name, num] of all) {
     if (nameRand < num) {
-      console.log(name);
       return name;
     }
     nameRand -= num;

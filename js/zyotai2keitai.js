@@ -467,7 +467,6 @@ const zyoutaiPatterns = [
 const convert = text => {
 
   const tokenizeResult = kuromojiTokenizer.tokenize(text);
-  //console.log(tokenizeResult);
   let resultText = "";
   for (let tokenIndex = 0; tokenIndex < tokenizeResult.length; tokenIndex++) {
     let hasHit = false;
