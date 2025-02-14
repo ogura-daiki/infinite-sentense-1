@@ -266,6 +266,7 @@ const katuyou = {
  */
 const endSentence = o => !o || (o.pos === "記号" && (o.pos_detail_1 === "句点" || o.pos_detail_1 === "読点"));
 
+// TODO: ○○しなかったそうです => ○○しませんでしたそうです となってしまう不具合の修正
 const zyoutaiPatterns = [
   {
     conditions: [

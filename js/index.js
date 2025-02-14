@@ -53,7 +53,7 @@ const normalizeSign = (input) => input.replace(/[,，、\.．。\?？!！]+/g, (
   "！": "！",
 }[_[0]] ?? "。"));
 
-const keitaiList = ["です","ます","でした","ました","でしょう","ありません","ください"];
+const keitaiList = ["です","ます","でした","ました","でしょう","ません","ください"];
 
 const output = create("p", {
   id: "output",
@@ -73,7 +73,9 @@ append(create("button", {
     `,
   textContent: "生成",
   "@click": async (e) => {
+    output.textContent = "生成中…";
     const randomString = genRandomString(500);
+    console.log(randomString);
     let translated = await translate(randomString);
     console.log(translated);
     translated = translated.replaceAll(/\s{2,}/g, " ");
@@ -88,6 +90,8 @@ append(create("button", {
     
     translated = translated.replace(/\s+/g, "。");
     translated = normalizeSign(translated);
+
+    console.log(kuromojiTokenizer.tokenize(translated));
     
     output.textContent = translated;
 
