@@ -100,3 +100,13 @@ append(create("button", {
     speechSynthesis.speak(new SpeechSynthesisUtterance(translated));
   },
 }));
+append(create("button", {
+  textContent: "停止",
+  style: `
+        border:1px solid lightgray;
+        padding:8px 16px;
+    `,
+  "@click": ()=>{
+    speechSynthesis.cancel();
+  }
+}));

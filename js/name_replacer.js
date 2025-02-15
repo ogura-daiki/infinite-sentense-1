@@ -1,6 +1,7 @@
 
 import { getRandomKana, getRandomKanaPart } from "./get_random_kana.js";
 import { randomGet } from "./jp_name.js";
+import { kanaHumanName } from "./kana_human_name.js";
 import { kuromojiTokenizer } from "./kurimoji.js";
 import { getAreaName, getCountryName } from "./place_name.js";
 import { randomLength } from "./util.js";
@@ -36,7 +37,7 @@ const getRandomHumanName = (key) => {
 
   let result;
   if(Math.random()<0.3) result = randomGet();
-  else result = getRandomKanaPart(randomLength(Math.round((2*1.5+key.length*0.5)/2), Math.round((7*1.5+key.length*0.5)/2)));
+  else result = kanaHumanName(randomLength(Math.round((2*1.5+key.length*0.5)/2), Math.round((7*1.5+key.length*0.5)/2)));
   humanNameCache.set(key, result);
   return result;
 }
