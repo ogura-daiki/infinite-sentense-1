@@ -266,7 +266,6 @@ const katuyou = {
  */
 const endSentence = o => !o || (o.pos === "記号" && (o.pos_detail_1 === "句点" || o.pos_detail_1 === "読点"));
 
-// TODO: ○○しなかったそうです => ○○しませんでしたそうです となってしまう不具合の修正
 const zyoutaiPatterns = [
   {
     conditions: [
@@ -308,6 +307,7 @@ const zyoutaiPatterns = [
       o => o.pos === "動詞" && o.conjugated_form === "未然形",
       o => o.pos === "助動詞" && o.basic_form === "ない" && o.conjugated_form === "連用タ接続",
       o => o.pos === "助動詞" && o.basic_form === "た" && o.conjugated_form === "基本形",
+      o => endSentence(o) || (o.pos === "助詞" && o.pos_detail_1 === "接続助詞"),
     ],
     edit: (list) => {
       katuyou.doushi.edit(list[0], "rennyou_now");
