@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>markovChainTest</title>
+</head>
+<body>
+  <script type="module">
+    import { NGramMarkovChain } from "../../js/markovChain.js";
+    import { cat } from "./cat.js";
+    const data = [
+      cat.replaceAll(/[\n\s]+/g, " "),
+    ];
+
+    const generator = new NGramMarkovChain({n:3});
+    generator.addAllData(data);
+    document.body.append(generator.getText({length:1000}));
+
+  </script>
+</body>
+</html>
