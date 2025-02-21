@@ -2,7 +2,7 @@ import { randomChar } from "./chinese_char.js";
 import { create } from "./create.js";
 import { translate } from "./translate.js";
 import { convert } from "./zyotai2keitai.js";
-import { kuromojiTokenizer } from "./kurimoji.js";
+import { kuromojiTokenizer } from "./kuromoji.js";
 import { replaceName } from "./name_replacer.js";
 
 

@@ -1,4 +1,4 @@
-import { kuromojiTokenizer } from "./kurimoji.js";
+import { kuromojiTokenizer } from "./kuromoji.js";
 
 /**
  * 

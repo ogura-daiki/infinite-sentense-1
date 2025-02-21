@@ -2,7 +2,7 @@
  * 下記URLの活用形の情報を参考に動詞の変換テストを作成した
  * https://ja.wiktionary.org/wiki/%E4%BB%98%E9%8C%B2:%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%81%AE%E6%B4%BB%E7%94%A8
  */
-import { kuromojiTokenizer } from "../../js/kurimoji.js";
+import { kuromojiTokenizer } from "../../js/kuromoji.js";
 import { convert } from "../../js/zyotai2keitai.js";
 
 const expect = (expect, value) => {

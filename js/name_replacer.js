@@ -2,7 +2,7 @@
 import { getRandomKana, getRandomKanaPart } from "./get_random_kana.js";
 import { randomGet } from "./jp_name.js";
 import { kanaHumanName } from "./kana_human_name.js";
-import { kuromojiTokenizer } from "./kurimoji.js";
+import { kuromojiTokenizer } from "./kuromoji.js";
 import { getAreaName, getCountryName } from "./place_name.js";
 import { randomLength } from "./util.js";
 
