@@ -10,6 +10,7 @@ const isHumanName = token => {
   if(token.pos !== "名詞" || token.pos_detail_1 === "数"){
     return false;
   }
+  if(token.basic_form === "*") return true;
   if(token.surface_form.length === 0) return true;
   if(token.pos_detail_2 === "人名" && token.pos_detail_1 !== "接尾") return true;
   if(token.word_type==="UNKNOWN"){
