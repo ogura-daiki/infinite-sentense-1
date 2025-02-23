@@ -50,7 +50,7 @@ const assignClassList = (elem, classList) => {
   elem.className = classNames.replaceAll(/\s+/g, " ");
 }
 
-const create = (name, options) => {
+const create = (name, options = {}) => {
   const elem = document.createElement(name);
   for (const [name, value] of Object.entries(options)) {
     if (name.startsWith("@")) {

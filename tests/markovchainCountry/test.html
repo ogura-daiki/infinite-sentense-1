@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>countryMarkovChainTest</title>
+</head>
+
+<body>
+  <script type="module">
+    import { NGramMarkovChain } from "../../js/markovChain.js";
+    import { placeNameData } from "../../data/countries/placeNameData.js";
+    import { create } from "../../js/create.js"
+
+    const generator = new NGramMarkovChain({ n: 2 });
+    console.log(generator);
+    generator.addAllData(placeNameData);
+    const names = [...Array(50)].map(() => {
+      const length = Math.floor(Math.random() * 7 + 3);
+      return [length, generator.getText({ length, prev: true, fill:true })];
+    });
+
+    const ul = create("ul");
+    for (let name of names) {
+      ul.append(create("li", {
+        textContent: `${name[0]} ${name[1]}`,
+      }));
+    }
+
+    document.body.append(ul);
+
+  </script>
+</body>
+
+</html>
