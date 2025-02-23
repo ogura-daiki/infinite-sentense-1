@@ -78,6 +78,8 @@ append(create("button", {
     console.log(randomString);
     let translated = await translate(randomString);
     console.log(translated);
+    console.log(kuromojiTokenizer.tokenize(translated));
+
     translated = translated.replaceAll(/\s{2,}/g, " ");
     translated = translated.replace(/[０-９]/g, zenkakuNum2Hankaku);
     translated = translated.replace(/\s*([\da-zA-Z]+)\s*/g, (_,g1)=>g1);
